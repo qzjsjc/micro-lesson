@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const _externals = require('externals-dependencies')
 
 module.exports = {
+    mode: 'production',
     entry: {
         app: [
             // 如果polyfill放在这里，打包的时候将不会被external,必须在js里require才能有效external
@@ -34,15 +35,13 @@ module.exports = {
         rules: [
             {
                 test: /\.js/,
-                use: ['babel-loader']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['stage-0']
+                    }
+                }
             }
         ]
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-    ]
+    }
 }
