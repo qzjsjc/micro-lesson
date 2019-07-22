@@ -1,47 +1,29 @@
-const path = require('path');
-const webpack = require('webpack');
-const _externals = require('externals-dependencies')
-
+const path = require("path")
+const fs = require("fs");
+const nodeModules = {};
+fs.readdirSync("node_modules")
+  .filter(function(x) {
+    return [".bin"].indexOf(x) === -1;
+  })
+  .forEach(function(mod) {
+    nodeModules[mod] = "commonjs " + mod;
+  });
 module.exports = {
-    mode: 'production',
-    entry: {
-        app: [
-            // 如果polyfill放在这里，打包的时候将不会被external,必须在js里require才能有效external
-            // 'babel-polyfill',
-            './app.js'
-        ]
+  mode: 'production',
+  entry: './app.js',
+  output: {
+     path: __dirname,
+     filename: "server.js",
+     chunkFilename: "[name].chunk.js",
+     libraryTarget: "commonjs"
+   },
+  node: {
+        fs: 'empty',
+       child_process: 'empty',
+       tls: 'empty',
+       net: 'empty',
+       __dirname: true
     },
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js'
-    },
-    resolve: {
-        extensions: [".js"]
-    },
-    target: 'node',
-    externals: _externals(),
-    context: __dirname,
-    node: {
-        console: true,
-        global: true,
-        process: true,
-        Buffer: true,
-        __filename: true,
-        __dirname: true,
-        setImmediate: true,
-        path: true
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['stage-0']
-                    }
-                }
-            }
-        ]
-    }
-}
+ target: "async-node",
+ externals: nodeModules,
+};
