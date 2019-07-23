@@ -1,8 +1,8 @@
 // index:
 const fs = require('fs');
 const path = require('path');
-// const listPath = '/usr/local/nginx/html/practice';
-const listPath = path.resolve(__dirname,'../practice');
+const listPath = '/usr/local/nginx/html/practice';
+// const listPath = path.resolve(__dirname,'../practice');
 module.exports = {
     'GET /': async (ctx, next) => {
         ctx.response.body = 'welcome'
