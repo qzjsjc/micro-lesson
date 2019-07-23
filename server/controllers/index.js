@@ -1,7 +1,7 @@
 // index:
 const fs = require('fs');
 const path = require('path');
-const listPath = '/usr/local/nginx/html/practice';
+const listPath = '/usr/local/nginx/dist/practice';
 // const listPath = path.resolve(__dirname,'../practice');
 module.exports = {
     'GET /': async (ctx, next) => {
