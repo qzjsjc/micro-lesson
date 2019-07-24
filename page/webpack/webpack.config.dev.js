@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const Copy = require('copy-webpack-plugin');
 
-const port = 9090;
+const port = 9099;
 
 const mpadir = path.resolve(__dirname, '../src/mpa_modules');
 
@@ -35,7 +35,8 @@ entries.forEach((item) => {
         template : `${mpadir}/${item}/index.html`,
         filename: `${item}/index.html`,
         chunks: [item],
-        inject: true
+        inject: true,
+        title: 'Lesson'
     }));
 });
 
